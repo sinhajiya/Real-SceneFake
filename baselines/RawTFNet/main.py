@@ -5,8 +5,6 @@ import numpy as np
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
-# from tensorboardX import SummaryWriter
-# from startup_args import set_random_seed
 import time
 from tqdm import tqdm
 from datetime import datetime
@@ -19,8 +17,6 @@ import soundfile as sf
 from eer_calc import *
 import random
 from utils import *
-
-
 
 
 def pad(x, max_len):
@@ -74,7 +70,6 @@ if __name__ == '__main__':
    
     # model
     parser.add_argument("--dilation", type=int, default=2)
-    # parser.add_argument("--augmentation", type=int, default=2)
     parser.add_argument('--n_output_logits', type=int, default=2, help='number of output logits for the model, default is 2, following wav2vec2-AASIST repo')
     parser.add_argument('--date', type=str, default='unknown',
                         help='date')
@@ -104,7 +99,6 @@ if __name__ == '__main__':
     parser.add_argument('--num_average_model', type=int, default=1)
     parser.add_argument("--model_ID_to_average", type=int, nargs='+', default=[], help="Nes_ratio, from outer to inner")
     parser.add_argument("--model_folder_path", type=str, help="the path of the folder of saved checkpoints")
-
     parser.add_argument('--batch_size', type=int, default=8)
     parser.add_argument('--num_epochs', type=int, default=20)
     parser.add_argument('--lr', type=float, default=0.001)
@@ -115,7 +109,7 @@ if __name__ == '__main__':
                         help='random seed (default: 1234)')
     # model name and path
     parser.add_argument('--model_path', type=str,
-                        default='/home/jiya/Baselines/RawTFNet/models/rawtfnet_combined_2026-04-02_03-58-05/best_dev.pth', help='Model checkpoint')
+                        default='models/rawtfnet_combined_2026-04-02_03-58-05/best_dev.pth', help='Model checkpoint')
     parser.add_argument('--comment', type=str, default=None,
                         help='Comment to describe the saved model')
     # Auxiliary arguments
