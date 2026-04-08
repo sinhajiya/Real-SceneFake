@@ -1,5 +1,22 @@
 ## AASIST
 
+
+### Training 
+
+To train the model:
+bash
+```
+python main.py --config <path to conf file>
+````
+To evaluate:
+bash
+```
+python main.py --config  <path to conf file> --eval 
+````
+
+To perform scenefake eval set scenefake-eval to true in conf file.
+
+---
 Code adapted from:
 
 * [https://github.com/clovaai/aasist.git](https://github.com/clovaai/aasist.git)
