@@ -1,5 +1,23 @@
 ### RawTFNet
 
+## Training
+
+To train the model:
+
+```bash
+python main.py protocols_path <path_to_protocol>
+````
+
+## Evaluation
+For evaluating our data:
+```bash
+python main.py protocols_path <path_to_protocol> --eval --model_path <pretrained model path>
+````
+For SceneFake evalaution (12 fold)
+```bash
+python main.py protocols_path <path_to_protocol> --eval --scenefake_eval --model_path <pretrained model path>
+````
+
 Code adapted from:
 [https://github.com/swagshaw/RawTFNet-Pytorch.git](https://github.com/swagshaw/RawTFNet-Pytorch.git)
 
