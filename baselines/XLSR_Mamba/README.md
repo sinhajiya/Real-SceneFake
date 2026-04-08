@@ -1,5 +1,23 @@
 ### XLSR-Mamba
 
+## Training
+
+To train the model:
+
+```bash
+python main.py protocol_path <path_to_protocol>
+````
+
+## Evaluation
+For evaluating our data:
+```bash
+python main.py protocol_path <path_to_protocol> --eval --model_path <pretrained model path>
+````
+For SceneFake evalaution (12 fold)
+```bash
+python main.py protocol_path <path_to_protocol> --eval --scenefake_eval --model_path <pretrained model path>
+````
+----
 Code adapted from:
 [https://github.com/swagshaw/XLSR-Mamba.git](https://github.com/swagshaw/XLSR-Mamba.git)
 
