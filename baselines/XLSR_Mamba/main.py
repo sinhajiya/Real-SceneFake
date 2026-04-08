@@ -42,7 +42,7 @@ def train_epoch(train_loader, model, lr,optim, device,weights):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='XLSR-Mamba')
     # Dataset
-    parser.add_argument('--protocol_path', type=str, default='/home/bs_thesis/datasets/combined_protocols', help='dir with protocols')
+    parser.add_argument('--protocol_path', type=str, required=True, help='dir with protocols')
     parser.add_argument('--dataset', type=str, default='combined')
 
     # Hyperparameters
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     parser.add_argument('--num_workers', type=int, default=4)
     parser.add_argument('--eval', action='store_true', default=False, help='eval mode')
     parser.add_argument('--scenefake_eval', action='store_true', default=False, help='eval mode')
-    parser.add_argument('--model_path', type=str, default='/home/bs_thesis/Codes/Baselines/XLSR-Mamba/models/xlsr-mamba-scenefake-2026-03-31_15-18-32/best_dev.pth', help='model path')
+    parser.add_argument('--model_path', type=str, default='/models/xlsr-mamba-scenefake-2026-03-31_15-18-32/best_dev.pth', help='model path')
 
     #model parameters
     parser.add_argument('--emb-size', type=int, default=144, metavar='N',
@@ -117,18 +117,18 @@ if __name__ == '__main__':
     '--sf_protocols',
     nargs='+',
     default=[
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_1.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_2.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_3.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_4.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_5.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_6.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_7.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_8.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_9.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_10.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_11.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_12.txt",
+        "/SceneFakeDataset/protocols/test_fold_1.txt",
+        "/SceneFakeDataset/protocols/test_fold_2.txt",
+        "/SceneFakeDataset/protocols/test_fold_3.txt",
+        "/SceneFakeDataset/protocols/test_fold_4.txt",
+        "/SceneFakeDataset/protocols/test_fold_5.txt",
+        "/SceneFakeDataset/protocols/test_fold_6.txt",
+        "/SceneFakeDataset/protocols/test_fold_7.txt",
+        "/SceneFakeDataset/protocols/test_fold_8.txt",
+        "/SceneFakeDataset/protocols/test_fold_9.txt",
+        "/SceneFakeDataset/protocols/test_fold_10.txt",
+        "/SceneFakeDataset/protocols/test_fold_11.txt",
+        "/SceneFakeDataset/protocols/test_fold_12.txt",
     ],
     help='List of protocol files for SceneFake folds'
 )
