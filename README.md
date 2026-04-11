@@ -47,17 +47,27 @@ Pretrained models are available at: https://huggingface.co/datasets/sinhajiya/Re
 
 ---
 
----
+### Dataset License and Usage Guidelines
 
-## Dataset License and Usage Guidelines
 
-- The dataset is to be used solely for its intended purpose i.e. SceneFake detection.
+#### 1. Intended Use
+This dataset may be used solely for research and development of audio deepfake detection systems. Any use outside this scope is strictly prohibited.
 
-- Commercial use of the dataset is strictly prohibited.
+#### 2. Non-Commercial Use
+Commercial use of the dataset is strictly prohibited.
 
-- Any use of the dataset in research or academic work must include proper credit and citation of the repository and its associated paper, including in presentations and publications.
+#### 3. Attribution and Citation
+Any use of the dataset in research or academic work must include proper credit and citation of the repository and its associated paper, including in presentations and publications.
 
-- Misuse of the voice data may result in legal consequences. Users must ensure the privacy and integrity of the dataset are maintained.
+#### 4. Misuse and Responsibility
+Misuse of the voice data may result in legal consequences. Users must ensure the privacy and integrity of the dataset are maintained.
+Users must not:
 
-- The dataset owner reserves the right to revoke access at any time without prior notice.
+- misuse the voice data for impersonation, synthesis, or harmful applications 
+- attempt to identify individuals or violate privacy
+
+Users are fully responsible for ensuring ethical use and compliance with applicable laws.
+Misuse may result in legal action.
+#### 5. Access and Revocation
+The dataset owner reserves the right to revoke access at any time without prior notice.
 
