@@ -71,3 +71,16 @@ Misuse may result in legal action.
 #### 5. Access and Revocation
 The dataset owner reserves the right to revoke access at any time without prior notice.
 
+---
+### Citation
+
+If you use this dataset, please cite:
+
+```bibtex
+@dataset{reality_aware_sf_2026,
+  author={Sinha, Jiya and S, Aarthi and Agarwal, Akshay},
+  title = {Reality-Aware Audio SceneFake Dataset},
+  year = {2026},
+  publisher = {Hugging Face},
+  url = {https://huggingface.co/datasets/sinhajiya/Real_SceneFake}
+}
