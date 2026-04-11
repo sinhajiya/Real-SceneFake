@@ -2,6 +2,18 @@
 
 This repository contains baseline implementations for the **Real SceneFake** dataset.
 
+
+---
+
+### Authors
+
+- Jiya Sinha, Aarthi S, Akshay Agarwal
+- Email id: {jiya22, saarthi24, akagarwal}@iiserb.ac.in
+- Affiliation: Trustworthy BiometraVision Lab, IISER Bhopal, India
+
+----
+
+
 ### Evaluated Models
 
 * **AASIST**
@@ -9,6 +21,12 @@ This repository contains baseline implementations for the **Real SceneFake** dat
 * **BEATs + AASIST**
 * **RawTFNet**
 * **XLSR-Mamba**
+
+
+
+Pretrained models are available at: https://huggingface.co/datasets/sinhajiya/Real_SceneFake
+
+--- 
 
 ### Experiments:
 
@@ -28,12 +46,6 @@ This repository contains baseline implementations for the **Real SceneFake** dat
 ![Cross-dataset Results](image.png)
 
 ---
-
-## Authors
-
-- Jiya Sinha, Aarthi S, Akshay Agarwal
-- Email id: {jiya22, saarthi24, akagarwal}@iiserb.ac.in
-- Affiliation: Trustworthy BiometraVision Lab, IISER Bhopal, India
 
 ---
 

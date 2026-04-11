@@ -44,11 +44,10 @@ def train_epoch(train_loader, model, lr,optim, device,weights):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='XLSR-Mamba')
     # Dataset
-    parser.add_argument('--protocol_path', type=str, default='/home/bs_thesis/datasets/OurDataset/Ours_Fake/protocols/no_augmentations', help='')
-    parser.add_argument('--ours_protocol_path', type=str, default='/home/bs_thesis/datasets/OurDataset/Ours_Fake/protocols/no_augmentations', help='')
+    parser.add_argument('--protocol_path', type=str, default= '../datasets/Ours/protocols', help='')
+    parser.add_argument('--ours_protocol_path', type=str, default='../datasets/Ours/protocols', help='')
     parser.add_argument('--k_value_finetune', type=int, default=1)
-    parser.add_argument('--pretrained_path', type=str, default='/home/bs_thesis/Codes/Baselines/XLSR-Mamba/models/xlsr-mamba-scenefake-2026-03-31_15-18-32/best_dev.pth', help='pretrained model ka path for finetuning.')
-
+    parser.add_argument('--pretrained_path', type=str, default='models/XLSR_Mamba_SF.pth', help='pretrained model ka path for finetuning.')
     parser.add_argument('--dataset', type=str, default='scenefake')
 
     # Hyperparameters
@@ -60,7 +59,7 @@ if __name__ == '__main__':
     parser.add_argument('--num_workers', type=int, default=4)
     parser.add_argument('--eval', action='store_true', default=False, help='eval mode')
     parser.add_argument('--scenefake_eval', action='store_true', default=False, help='eval mode')
-    parser.add_argument('--model_path_eval', type=str, default='/home/bs_thesis/Codes/Baselines/XLSR-Mamba/models/finetuning_1-shot_scenefake_2026-04-01_11-23-23/best_dev.pth', help='model path')
+    parser.add_argument('--model_path_eval', type=str, default='models/finetuning_1-shot_scenefake_2026-04-01_11-23-23/best_dev.pth', help='model path for evaluation')
 
     #model parameters
     parser.add_argument('--emb-size', type=int, default=144, metavar='N',
@@ -122,18 +121,18 @@ if __name__ == '__main__':
     '--sf_protocols',
     nargs='+',
     default=[
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_1.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_2.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_3.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_4.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_5.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_6.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_7.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_8.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_9.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_10.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_11.txt",
-        "/home/bs_thesis/datasets/SceneFakeDataset/protocols/test_fold_12.txt",
+        "../datasets/SF/protocols/test_fold_1.txt",
+        "../datasets/SF/protocols/test_fold_2.txt",
+        "../datasets/SF/protocols/test_fold_3.txt",
+        "../datasets/SF/protocols/test_fold_4.txt",
+        "../datasets/SF/protocols/test_fold_5.txt",
+        "../datasets/SF/protocols/test_fold_6.txt",
+        "../datasets/SF/protocols/test_fold_7.txt",
+        "../datasets/SF/protocols/test_fold_8.txt",
+        "../datasets/SF/protocols/test_fold_9.txt",
+        "../datasets/SF/protocols/test_fold_10.txt",
+        "../datasets/SF/protocols/test_fold_11.txt",
+        "../datasets/SF/protocols/test_fold_12.txt",
     ],
     help='List of protocol files for SceneFake folds'
 )
@@ -303,7 +302,6 @@ if __name__ == '__main__':
         param.requires_grad = True
 
 
-#     # ---------- UNFREEZE TOP-1 MAMBA LAYER ----------
     top_idx = model.conformer.forward_layers.__len__() - 1
 
     # forward top layer
@@ -394,7 +392,7 @@ if __name__ == '__main__':
                 break
 
             for i in range(n_mejores):
-                if bests[i] > dev_eer:   # lower EER is better
+                if bests[i] > dev_eer:  
                     for t in range(n_mejores - 1, i, -1):
                         bests[t] = bests[t - 1]
 

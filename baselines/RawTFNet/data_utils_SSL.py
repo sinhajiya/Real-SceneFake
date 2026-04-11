@@ -11,7 +11,6 @@ import soundfile as sf
 import torch
 import torchaudio.functional as AF
 from utils import *
-# original file from 
 import torchaudio.transforms as T
 
 def protocol_reader(protocol_path, is_eval=False):
@@ -54,24 +53,21 @@ def pad(x, max_len=64600):
 # -- SceneFake loader --
 
 class OurTrainDataset(Dataset):
-# take 4secs audio non overlapping and augmentations 
+# take 4secs audio non overlapping 
 # return segment and label
-    def __init__(self, file_list, labels, cut=64600, sr=16000, augmentations=[]):
+    def __init__(self, file_list, labels, cut=64600, sr=16000):
 
         self.file_list = file_list
         self.labels = labels
         self.cut = cut
         self.sr = sr
-        self.augmentations = augmentations
+      
         self.hop = cut
         self.audio_cache = {}
         self.index_map = []
 
         self._prepare_audio()
-        
-        print("Augmentations:", augmentations if augmentations else "None")
-
-
+     
     def _prepare_audio(self):
 
         for path in self.file_list:
@@ -101,19 +97,15 @@ class OurTrainDataset(Dataset):
 
 
     def __len__(self):
-        if self.augmentations:
-            return 2 * len(self.index_map)
+        
         return len(self.index_map)
     
     
     def __getitem__(self, index):
 
-        if self.augmentations:
-            base_index = index // 2
-            use_aug = index % 2 == 1
-        else:
-            base_index = index
-            use_aug = False
+    
+        base_index = index
+        
 
         path, start = self.index_map[base_index]
         audio = self.audio_cache[path]
@@ -122,9 +114,6 @@ class OurTrainDataset(Dataset):
 
         if len(segment) < self.cut:
             segment = np.pad(segment, (0, self.cut - len(segment)))
-
-        if use_aug:
-            segment = audioaugment(segment, self.sr, self.augmentations)
 
         segment = torch.from_numpy(segment).float()
 
@@ -347,7 +336,7 @@ def get_loader(seed: int, args):
         train_set = OurTrainDataset(
             file_list=train_files,
             labels=train_labels,
-            # augmentations =args.augmentations
+         
         
         )
 

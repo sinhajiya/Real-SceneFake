@@ -18,7 +18,7 @@ class MambaConfig:
 class SSLModel(nn.Module): #W2V
     def __init__(self,device):
         super(SSLModel, self).__init__()
-        cp_path = '/home/bs_thesis/Codes/Baselines/aasist/pretrained/xlsr2_300m.pt'  
+        cp_path = 'pretrained/xlsr2_300m.pt'  
         model, _, _ = fairseq.checkpoint_utils.load_model_ensemble_and_task([cp_path])
         self.model = model[0]
         self.device=device

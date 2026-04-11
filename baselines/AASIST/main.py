@@ -1,11 +1,3 @@
-"""
-Main script that trains, validates, and evaluates
-various models including AASIST.
-
-AASIST
-Copyright (c) 2021-present NAVER Corp.
-MIT license
-"""
 import argparse
 import datetime
 import json
@@ -105,7 +97,7 @@ def main(args: argparse.Namespace) -> None:
         
         else:
 
-            print("ffaaaaaaaah scenefake evallll faaaaah")
+            print("scenefake eval.")
             model.eval()
 
             all_eers = []
@@ -123,7 +115,7 @@ def main(args: argparse.Namespace) -> None:
                     all_eers.append(eer)
                     all_reports.append(report)
 
-            print("\n final---- avg ")
+            print("\n final ---- avg ")
 
             if len(all_eers) > 0:
                 print(f"Mean EER: {np.mean(all_eers):.4f}")
@@ -249,15 +241,6 @@ def main(args: argparse.Namespace) -> None:
 
 def get_model(config, device: torch.device):
 
-    # """Define DNN model architecture"""
-    # module = import_module("models.{}".format(model_config["architecture"]))
-    # _model = getattr(module, "Model")
-    # model = _model(model_config).to(device)
-    # nb_params = sum([param.view(-1).size()[0] for param in model.parameters()])
-    # print("no. model params:{}".format(nb_params))
-
-
-
     if config["model"] == 'w2v2_aasist':
         model = w2v2_aasist(config,device).to(device)
     elif config["model"] == 'aasist':
@@ -272,7 +255,6 @@ def get_model(config, device: torch.device):
         }
         model = aasist(aasist_config)
     elif config["model"] == 'beats_aasist':
-        # model = beats_aasist(config, device)
         model = beats_aasist(config,device).to(device)
     else:
         print('Model not found')
@@ -351,7 +333,7 @@ def get_loader(seed: int, config: dict, args: argparse.Namespace):
         )
     else:
         # trn_loader, val_loader = None, None
-        print("evalllll loaderrrrrr")
+        print("eval loader")
 
         if not config["scenefake-eval"]:
             print("not sf eval worked!")
@@ -398,7 +380,7 @@ def get_loader(seed: int, config: dict, args: argparse.Namespace):
             return None, None, seen_loader, unseen_loader, None
         
         else:
-            print("main  sf eval and protocols wale tk pahcuh gya huuuu")
+            print("main sf eval and protocols wale tk pahcuh gya")
             test_protocols = config['sf-eval-protocols']
             seen_loader = []
             for num, t in enumerate(test_protocols):
@@ -438,6 +420,7 @@ def train_epoch(
     ii = 0
     model.train()
     accumulation_steps=1
+
     # set objective (Loss) functions
     weight = torch.FloatTensor(class_weights).to(device)
     criterion = nn.CrossEntropyLoss(weight=weight)
@@ -449,15 +432,6 @@ def train_epoch(
         ii += 1
         batch_x = batch_x.to(device)
         batch_y = batch_y.view(-1).type(torch.int64).to(device)
-        # batch_x = batch_x.to(device, non_blocking=True)
-        # batch_y = batch_y.view(-1).long().to(device, non_blocking=True)
-
-        # if ii == 1:   
-        #     print("Input device:", batch_x.device)
-        #     print("Label device:", batch_y.device)
-        #     print("Model device:", next(model.parameters()).device)
-
-
 
         if config['model']=="aasist":
             _, batch_out = model(batch_x, Freq_aug=str_to_bool(config["freq_aug"]))
@@ -487,13 +461,11 @@ def train_epoch(
             # optimizer.zero_grad()
             batch_loss.backward()
             # optimizer.step()
-            # 累加到指定的 steps 后再更新参数
+        
             if (step_nums+1) % accumulation_steps == 0:     
-                optim.step()                    # 更新参数
-                optim.zero_grad()               # 梯度清零
-            # if ii == 1:
-            #     print("Output device:", batch_out.device)
-            #     print("Loss device:", batch_loss.device)
+                optim.step()                    
+                optim.zero_grad()               
+ 
             step_nums += 1
         
     
@@ -509,6 +481,10 @@ if __name__ == "__main__":
                         type=str,
                         help="configuration file",
                         required=True)
+    
+
+
+    
     parser.add_argument(
         "--output_dir",
         dest="output_dir",
@@ -520,17 +496,10 @@ if __name__ == "__main__":
                         type=int,
                         default=1234,
                         help="random seed (default: 1234)")
+    
     parser.add_argument(
         "--eval",
         action="store_true",
         help="when this flag is given, evaluates given model and exit")
-    parser.add_argument("--comment",
-                        type=str,
-                        default=None,
-                        help="comment to describe the saved model")
-    parser.add_argument("--eval_model_weights",
-                        type=str,
-                        default=None,
-                        help="directory to the model weight file (can be also given in the config file)")
-    
+
     main(parser.parse_args())
