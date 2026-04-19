@@ -10,7 +10,7 @@ RawTFNet_models/
 *.pth/
 *.pt/
 pretrained_models/
-
+fairseq*/
 # Distribution / packaging
 .Python
 build/

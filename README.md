@@ -24,8 +24,12 @@ This repository contains baseline implementations for the **Real SceneFake** dat
 
 
 
-Pretrained models are available at: https://huggingface.co/datasets/sinhajiya/Real_SceneFake
+Dataset and the pretrained models are available at: https://huggingface.co/datasets/sinhajiya/Real_SceneFake
 
+### Dataset download
+```
+python other_codes/download_dataset.py
+```
 --- 
 
 ### Experiments:
