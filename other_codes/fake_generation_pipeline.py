@@ -24,7 +24,7 @@ scene_to_speech = {
     "sport": "file_names.sport_files"
 }
 
- 
+snr_timev = False
 start = -5
 end = 25
 
@@ -78,11 +78,11 @@ def generate_snr_curve(length, sr, start_snr, end_snr, points=6):
 
 
 
-out_dir = "fake/"
+out_dir = "/home/bs_thesis/Codes/FakeCreation/Ours/fake_no_time_varying"
 
 os.makedirs(out_dir, exist_ok=True)
 
-csv_path = f"fake/fake_csv.csv"
+csv_path = f"/home/bs_thesis/Codes/FakeCreation/Ours/fake_no_time_varying/fake_csv.csv"
 os.makedirs(os.path.dirname(csv_path), exist_ok=True)
 df = pd.DataFrame(rows)
 
@@ -140,43 +140,76 @@ for scene, env_files in scenefiles.items():
         env_end = (start_idx + speech_len) / speech_sr
 
         noise = rms_norm(env_segment.squeeze())
-        
-        points = random.randint(5,10)
-        snr_curve, snr_points, snr_times = generate_snr_curve(
-            speech_len,
-            speech_sr,
-            start,
-            end,
-            points
-        )
+        if snr_timev:
+            points = random.randint(5,10)
+            snr_curve, snr_points, snr_times = generate_snr_curve(
+                speech_len,
+                speech_sr,
+                start,
+                end,
+                points
+            )
 
-        speech_power = speech.pow(2).mean()
-        noise_power = noise.pow(2).mean()
+            speech_power = speech.pow(2).mean()
+            noise_power = noise.pow(2).mean()
 
-        snr_linear = 10 ** (snr_curve / 10)
-        noise_scale = torch.sqrt(speech_power / (snr_linear * noise_power))
+            snr_linear = 10 ** (snr_curve / 10)
+            noise_scale = torch.sqrt(speech_power / (snr_linear * noise_power))
 
-        mixed = speech + noise_scale * noise
+            mixed = speech + noise_scale * noise
+        else:
+            snr_db = random.uniform(start, end)
+            snr_linear = 10 ** (snr_db / 10)
+
+            speech_power = speech.pow(2).mean()
+            noise_power = noise.pow(2).mean()
+
+            noise_scale = torch.sqrt(speech_power / (snr_linear * noise_power))
+
+            mixed = speech + noise_scale * noise
 
         mixed = mixed / (mixed.abs().max() + 1e-8)
-
-        mixed = mixed.unsqueeze(0)
+        if mixed.ndim == 1:
+            mixed = mixed.unsqueeze(0)
+        # mixed = mixed.unsqueeze(0)
 
         out_path = os.path.join(out_dir, f"fake_{speech_name}")
     
         torchaudio.save(out_path, mixed, speech_sr)
-
-        for t, v in zip(snr_times.tolist(), snr_points.tolist()):
-
+        if snr_timev:
+            for t, v in zip(snr_times.tolist(), snr_points.tolist()):
+                rows.append({
+                    "speechfile": speech_name,
+                    "scene": scene_name,
+                    "envfilename": env_file,
+                    "envtimestart": env_start,
+                    "envtimeend": env_end,
+                    "snr_timestamp": float(t),
+                    "snr_value": float(v)
+                })
+        else:
             rows.append({
                 "speechfile": speech_name,
                 "scene": scene_name,
                 "envfilename": env_file,
                 "envtimestart": env_start,
                 "envtimeend": env_end,
-                "snr_timestamp": float(t),
-                "snr_value": float(v)
+                "snr_timestamp": 0.0,
+                "snr_value": float(snr_db)
             })
+
+            
+        # for t, v in zip(snr_times.tolist(), snr_points.tolist()):
+
+        #     rows.append({
+        #         "speechfile": speech_name,
+        #         "scene": scene_name,
+        #         "envfilename": env_file,
+        #         "envtimestart": env_start,
+        #         "envtimeend": env_end,
+        #         "snr_timestamp": float(t),
+        #         "snr_value": float(v)
+        #     })
 
 
 df = pd.DataFrame(rows)
